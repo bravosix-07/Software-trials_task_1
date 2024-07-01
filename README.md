@@ -96,8 +96,28 @@ Here are the step to follow to achieve the goal :
 
 7.  Autonoumous navigation on the map using DWA planner (local planner in ROS)
       
- 
+       Run the following commands :
+
+         roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
        
+         roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+
+         roslaunch turtlebot3_navigation move_base.launch   
+
+       Make sure that the move_base launch file contains the folloeing parameter to use DWA planner for navigation :
+         
+         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+
+         
+       Now using RVIZ, set 2DNavgoal to autonomously navigate from one point to another.
+
+       To visualise LIDAR sensor data :
+
+       Add LaserScan option in RViz and set topic to '/scan'. You can also add 'RobotModel', 'Tf', 'Map'
+
+   
+   
+   
 
 
    
