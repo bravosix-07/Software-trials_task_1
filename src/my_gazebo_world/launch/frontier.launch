@@ -1,0 +1,16 @@
+<launch>
+  <!-- Include TurtleBot3 navigation launch file -->
+  <include file="$(find turtlebot3_navigation)/launch/turtlebot3_navigation.launch">
+    <arg name="map_file" value="$(find turtlebot3_navigation)/maps/map.yaml" />
+  </include>
+
+  <!-- Launch frontier exploration node -->
+  <node name="explore" pkg="frontier_exploration" type="explore" output="screen">
+    <param name="costmap_topic" value="/move_base/global_costmap/costmap" />
+    <param name="costmap_updates_topic" value="/move_base/global_costmap/costmap_updates" />
+    <param name="base_frame" value="base_footprint" />
+    <param name="planner_plugin" value="navfn/NavfnROS" />
+    <param name="goal_distance" value="0.5" />
+  </node>
+</launch>
+

@@ -1,0 +1,16 @@
+<launch>
+  <!-- Launch the Gazebo simulation with your custom world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find my_gazebo_world)/worlds/hospital.world"/>
+  </include>
+
+  <!-- Spawn the TurtleBot3 model with a specific initial pose -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro'" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model turtlebot3_burger -x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0" output="screen"/>
+
+</launch>
+
+
+
+
+
