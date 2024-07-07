@@ -102,7 +102,7 @@ Here are the step to follow to achieve the goal :
        
          roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
 
-         roslaunch turtlebot3_navigation move_base.launch   
+         roslaunch turtlebot3_navigation move_base.launch  (This command is optional, not necessary) 
 
        Make sure that the move_base launch file contains the folloeing parameter to use DWA planner for navigation :
          
