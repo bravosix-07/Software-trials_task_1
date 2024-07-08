@@ -4,7 +4,7 @@ This repo is for task 1 of software trials for team Deimos.
 
 Summary of what we do in this repo :
 1. We launch a custom gazebo world with a turtlebot.
-2. We create a map of that gazebo world by teleoperating turtlebot3_burger in that world and save it using map_server node.
+2. We create a map of that gazebo world by navigating turtlebot3_burger in that world using frontier_exploration and save it using map_server node.
 3. We do autonomous navigation of turtlebot3_burger on that map using DWA planner in ROS and visualize LIDAR sensor data.
 
 Resources used : ROS Noetic, turtlebot3 robot(burger) , ROS navigation stack, Gazebo, RViz.
@@ -77,17 +77,14 @@ Here are the step to follow to achieve the goal :
        roslaunch my_gazebo_world turtlebot3_slam.launch
 
    
-5. Creating a map of our custom launched gazebo world using SLAM (gmapping) by teleoperating turtlebot3 (could be done autonomously using frontier exploration package)
+5. Creating a map of our custom launched gazebo world using SLAM (gmapping) by autonomously navigating turtlebot3 using frontier_exploration package :
 
       Open a new terminal and launch following command :
    
-       roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+       roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=frontier_exploration
 
-      Now, launch teleoperation on turtlebot3 :
-   
-       roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
-      Teleoperate and see the map building on RViz and save the map when done using the following command :
+      Using 2DNavGoal on RViz, see the map building on RViz and save the map when done using the following command :
    
        rosrun map_server map_saver -f ~/map
 
