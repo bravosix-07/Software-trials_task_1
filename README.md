@@ -2,14 +2,20 @@
 
 This repo is for task 1 of software trials for team Deimos.
 
-Summary of what we do in this repo :
+Blueprint :
 1. We launch a custom gazebo world with a turtlebot.
+   
 2. We create a map of that gazebo world by navigating turtlebot3_burger in that world using frontier_exploration and save it using map_server node.
+  
 3. We do autonomous navigation of turtlebot3_burger on that map using DWA planner in ROS and visualize LIDAR sensor data.
+
+   
 
 Resources used : ROS Noetic, turtlebot3 robot(burger) , ROS navigation stack, Gazebo, RViz.
 
+
 Here are the step to follow to achieve the goal : 
+
 
 1. Create our workspace folder named catkin_ws and initialize it using the following commands :
 
@@ -36,6 +42,7 @@ Here are the step to follow to achieve the goal :
    From the above repo, download the hospital.world and model zip files from 'hospital' folder.
 
    Extract all these zip files to the following folder(create it too) : /home/ashutosh/.gazebo/models/hospital/models/
+   
 
    Create a folder name my_gazebo_world in catkin_ws folder :
    
@@ -48,8 +55,10 @@ Here are the step to follow to achieve the goal :
        mkdir worlds
 
        mkdir launch
+   
 
    Copy the hospital.world file from Downloads to the worlds folder created above.
+   
 
    Go to the launch folder : cd ~/catkin_ws/my_gazebo_world/launch and create a launch file 'turtlebot3_slam.launch' with the following content :
 
@@ -68,7 +77,9 @@ Here are the step to follow to achieve the goal :
     
      Now, source the ROS enviroment and build your workspace using catkin_make command.
 
+
      Now launch the gazebo world with turtlebot3 with the following commands :
+   
 
        export GAZEBO_MODEL_PATH=/home/ashutosh/.gazebo/models/hospital/models/
    
@@ -76,19 +87,29 @@ Here are the step to follow to achieve the goal :
 
        roslaunch my_gazebo_world turtlebot3_slam.launch
 
+
    
 5. Creating a map of our custom launched gazebo world using SLAM (gmapping) by autonomously navigating turtlebot3 using frontier_exploration package :
 
-      Open a new terminal and launch following command :
+
+    Open a new terminal and launch following command :
    
        roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=frontier_exploration
 
 
-      Using 2DNavGoal on RViz, see the map building on RViz and save the map when done using the following command :
+
+    Using 2DNavGoal on RViz, see the map building on RViz and save the map when done using the following command :
    
-       rosrun map_server map_saver -f ~/map
+       rosrun map_server map_saver -f ~/hospital_map
 
       This will save map.yaml and map.pgm in home directory
+   
+
+
+      Make sure that the move_base launch file contains the folloeing parameter to use DWA planner for navigation :
+         
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+   
    
 
 7.  Autonoumous navigation on the map using DWA planner (local planner in ROS)
@@ -97,16 +118,10 @@ Here are the step to follow to achieve the goal :
 
          roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
        
-         roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
-
-         roslaunch turtlebot3_navigation move_base.launch  (This command is optional, not necessary) 
-
-       Make sure that the move_base launch file contains the folloeing parameter to use DWA planner for navigation :
+         roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/hospital_map.yam
+       
          
-         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
-
-         
-       Now using RVIZ, set 2DNavgoal to autonomously navigate from one point to another.
+       Now using RVIZ, set 2DNavGoal to autonomously navigate from one point to another.
 
        To visualise LIDAR sensor data :
 
